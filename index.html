@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="utf-8">
+	<title>りっちゃんの献立</title>
+	<link rel="stylesheet" type="text/css" href="css/style.css"> 
+</head>
+<body>
+    <div id="app">
+        <div class="container">
+            <headers></headers>
+            <div class="construct">
+                <div class="main">
+                    <router-view></router-view>
+                </div>
+            </div><!-- .construct -->
+            <footers></footers>
+        </div><!-- .container -->
+    </div>
+</body>
+    <script src="js/vue.min.js"></script>
+    <script src="js/vue-router.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/commonComponent.js"></script>
+    <script src="js/mainComponent.js"></script>
+    <script src="js/router.js"></script>
+    <script>
+        // Vueインスタンス作成
+        var app = new Vue({
+            el : "#app",
+            router
+        })
+    </script>
+</html>

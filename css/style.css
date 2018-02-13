@@ -1,0 +1,144 @@
+@charset "utf-8";
+
+/***** .header *****/
+.header-navi ul li {
+  border-right: 1px #CCC solid;
+  color: #87CEEB;
+}
+
+.header-navi ul li:nth-child(1) {
+  border-left: 1px #CCC solid;
+}
+
+.header-navi ul li:hover{
+  color: #6495ED;
+}
+
+.header {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.header .router-link-active {
+  margin: 0 auto;
+}
+
+.header img {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.header-navi {
+  width: 100%;
+  padding: 0;
+  margin: 0 auto;
+}
+
+.header-navi ul {
+  overflow: hidden;
+  padding-left: 0;
+  list-style-type: none;
+  width: 100%;
+  padding: 0 !important;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.header-navi ul li {
+  padding-top: 9px;
+  padding-bottom: 0;
+  font-size: 12px;
+  font-weight: bold;
+  width: 180px;
+  height: 25px;
+  text-align: center;
+  list-style: none;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.main-ad {
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/***** .footer *****/
+.footer {
+  width: 100%;
+  clear: both;
+  background-color: #ccc;
+  font-size: 14px;
+  margin-top: 20px;
+}
+
+.footer-navi {
+  width: 100%;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.footer ul {
+  list-style: none;
+}
+
+.footer a:hover {
+  color: red;
+}
+
+.footer a:active {
+  color: red;
+}
+
+.footer-detail {
+  width: 250px;
+  float: left;
+}
+
+.footer-detail h3 {
+  margin-left: 30px;
+}
+
+.footer .copyright {
+  text-align: center;
+  margin-top: 10px;
+}
+
+
+/***** .input *****/
+
+input[type=text] {
+  border:0;
+  padding:10px;
+  border:solid 1px #ccc;
+  width:150px;
+  border-radius: 5px;
+  -moz-box-shadow: inset 0 0 4px rgba(0,0,0,0.2);
+  -webkit-box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.2);
+  box-shadow: inner 0 0 4px rgba(0, 0, 0, 0.2);
+}
+
+#submit {
+  margin: 20px auto;
+  width : 150px;
+  text-decoration: none;
+  border: double 4px #67c5ff;
+  border-radius: 3px;
+}
+
+#contact-submit:hover {
+  background: #EDE107;
+}
+
+
+/***** .menu-list *****/
+
+.menu-list {
+
+}
+
+.menu-list-table td{
+  border: 1px solid #ccc;
+}
+
