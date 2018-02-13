@@ -1,5 +1,12 @@
 @charset "utf-8";
 
+font-family : Arial,'ＭＳ Ｐゴシック',arial unicode ms,sans-serif
+
+.tac {
+  margin: 0 auto;
+  text-align: center;
+}
+
 /***** .header *****/
 .header-navi ul li {
   border-right: 1px #CCC solid;
@@ -111,6 +118,7 @@
 input[type=text] {
   border:0;
   padding:10px;
+  margin: 10px;
   border:solid 1px #ccc;
   width:150px;
   border-radius: 5px;
@@ -119,26 +127,114 @@ input[type=text] {
   box-shadow: inner 0 0 4px rgba(0, 0, 0, 0.2);
 }
 
-#submit {
-  margin: 20px auto;
-  width : 150px;
+.submit {
+  margin: 10px;
+  width : 100px;
   text-decoration: none;
   border: double 4px #67c5ff;
   border-radius: 3px;
 }
 
-#contact-submit:hover {
+.submit:hover {
   background: #EDE107;
 }
 
+select {
+  margin: 10px;
+  background: #FFFDF4;
+  border: 2px solid #D2BA85;
+  border-radius: 5px;
+  color: #0C2245;
+  font-size: 14px;
+  height: 30px;
+  line-height: 30px;
+  text-align: left;
+  text-indent: 5px;
+  vertical-align: middle;
+  width: 140px;
+}
+
+/***** .labels *****/
+.labels {
+  font-weight: bold;
+}
 
 /***** .menu-list *****/
 
 .menu-list {
 
 }
-
-.menu-list-table td{
+.menu-list-table {
   border: 1px solid #ccc;
+  width:100%;
+  table-layout: fixed;
+  border: none !important;
+  border-collapse: separate;
+  border-spacing: 7px 0px;
+}
+.menu-list-table th{
+  border: none !important;
+}
+.menu-list-table tbody td{
+  border: none !important;
+  background-color:#FFF9FF !important;
+  border-bottom: solid 2px #f9f9f9 !important;
 }
 
+.menu-list-table thead th {
+ font-weight: bold;
+ border-radius: 10px 10px 0px 0px;
+}
+ 
+/* ボディ項目 */
+.menu-list-table tbody th {
+ background:#f2f5fc;
+ font-weight: bold;
+ border-bottom: solid 2px #f9f9f9 !important;
+ line-height:4.5em;
+}
+ 
+/* ボディデータ */
+.menu-list-table tbody td {
+ text-align:center;
+}
+ 
+/* ヘッダー行　１列ごとの色変え */
+.menu-list-table thead th:nth-child(1)  {
+ background:#81d4fa;
+}
+ 
+.menu-list-table thead th:nth-child(2)  {
+ background: #FFBCFF;
+}
+.menu-list-table thead th:nth-child(3)  {
+ background: #FFFFB2;
+}
+.menu-list-table thead th:nth-child(4)  {
+ background: #C4FF89;
+}
+.menu-list-table thead th:nth-child(5)  {
+ background: #FFB2D8;
+}
+ 
+/* 最終行のボーダーをなくす */
+.menu-list-table tbody tr:last-child th,
+.menu-list-table tbody tr:last-child td {
+ border-bottom:none !important;
+}
+
+
+
+/***** .menu-name *****/
+.menu-name {
+    color: blue;
+    text-decoration: underline;
+}
+.menu-name:hover {
+    color: red;
+    text-decoration: none;
+}
+.menu-name:active {
+    color: red;
+    text-decoration: none;
+}

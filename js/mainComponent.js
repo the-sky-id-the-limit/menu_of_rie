@@ -29,45 +29,48 @@ Vue.component('lists', {
     template : 
         '<div class="contents">'+
           '<div class="search-menu">'+
-            'ワード検索：<input type="text" v-model="searchWord"><br>'+
-            'ジャンル検索：<select v-model="genre">'+
+            '<span class="labels">ワード検索：</span><input type="text" v-model="searchWord"><br>'+
+            '<span class="labels">ジャンル検索：</span><select v-model="genre">'+
               '<option v-for="genres in menuGenre">{{genres}}</option>'+
             '</select>'+
           '</div>'+
           '<div class="menu-list">'+
             '<h5>メニューリスト</h5>'+
-            '<div v-if="!listDispFlag">'+
-              '<p>該当する献立がありません。</p>'+
-              '<router-link tag="button" to="/regist">献立を登録する</router-link>'+
+            '<div v-if="!listDispFlag" class="tac">'+
+              '<h3>該当する献立がありません。</h3>'+
+              '<router-link tag="button" to="/regist" class="submit">献立を登録する</router-link>'+
             '</div>'+
             '<table class="menu-list-table" v-if="listDispFlag">'+
               '<thead>'+
                 '<tr>'+
-                  '<td></td>'+
-                  '<td>献立名<span @click="desc(nameFlag)">▲</span><span @click="asc(nameFlag)">▼</span></td>'+
-                  '<td>ジャンル<span @click="desc(genreFlag)">▲</span><span @click="asc(genreFlag)">▼</span></td>'+
-                  '<td>日付<span @click="desc(dateFlag)">▲</span><span @click="asc(dateFlag)">▼</span></td>'+
+                  '<th></th>'+
+                  '<th>献立名<span @click="desc(nameFlag)">▲</span><span @click="asc(nameFlag)">▼</span></th>'+
+                  '<th>ジャンル<span @click="desc(genreFlag)">▲</span><span @click="asc(genreFlag)">▼</span></th>'+
+                  '<th>日付<span @click="desc(dateFlag)">▲</span><span @click="asc(dateFlag)">▼</span></th>'+
                 '</tr>'+
               '</thead>'+
               '<tbody>'+
                 '<tr v-for="menu in menuList">'+
                   '<td>'+
-                    '<button @click="deletMenu(menu.name)">削除</button>'+
-                    '<button @click="updateMenu(menu.name)">編集</button>'+
+                    '<button @click="deletMenu(menu.name)" class="submit">削除</button>'+
+                    '<button @click="updateMenu(menu.name)" class="submit">編集</button>'+
                   '</td>'+
-                  '<td>{{menu.name}}</td>'+
+                  '<td><a @click="getDateList(menu.name)" class="menu-name">{{menu.name}}</a></td>'+
                   '<td>{{menu.genre}}</td>'+
                   '<td>{{menu.latestDate}}</td>'+
                 '</tr>'+
               '</tbody>'+
             '</table>'+
+            '<div>'+
+              '<button class="submit tac" @click="deleteAll()" v-if="listDispFlag">全削除</button>'+
+            '</div>'+
           '</div>'+
         '</div><!-- .contents -->',
     data: function () {
         return {
             menuList : {},
             menuGenre : [],
-            genre : '全て',
+            genre : MENU_GENRE.ALL,
             listDispFlag : true,
             searchWord : '',
             nameFlag : 'name',
@@ -89,6 +92,25 @@ Vue.component('lists', {
             console.log('[STRAT]updateMenu with ' + key);
             this.$router.push({path : 'regist' , query : { keyName : key}});
             console.log('[END]updateMenu with ' + key);
+        },
+        getDateList : function(key) {
+            console.log('[STRAT]getDateList with ' + key);
+            var dateList = this.menuList[key].date;
+            var dateStr = ""
+            for(index in dateList) {
+                dateStr = dateStr + dateList[index] + "\n"
+            }
+            alert(key + 'を使用したのは以下の日程です。\n' + dateStr);
+            console.log('[END]getDateList with ' + key);
+        },
+        deleteAll : function() {
+            console.log('[STRAT]deleteAll.');
+            var isDeleteAll = confirm('献立全てを削除します。よろしいですか？');
+            if(isDeleteAll) {
+                deleteMenuList();
+            }
+            this.menuList = {};
+            console.log('[END]deleteAll.');
         },
         desc : function(flag){
             console.log('[START]desc sort.')
@@ -228,27 +250,27 @@ Vue.component('regists', {
           '<h5>献立登録</h5>'+
           '<div class="regist-menu">'+  
               '<div class="menu-input-block">'+
-                  '<p>献立名</p>'+
+                  '<p class="labels">献立名</p>'+
                   '<input type="text" v-model="menuName">'+
               '</div><!-- .menu-input-block -->'+
               '<div class="menu-input-block">'+
-                  '<p>献立のジャンル</p>'+
+                  '<p class="labels">献立のジャンル</p>'+
                   '<select v-model="genre">'+
                       '<option v-for="genres in menuGenre">{{genres}}</option>'+
                   '</select>'+
               '</div><!-- .menu-input-block -->'+
               '<div class="menu-input-block">'+
-                  '<p>献立を使った直近の日付</p>'+
+                  '<p class="labels">献立を使った直近の日付</p>'+
                   '<input type="text" v-model="menuDate">'+
               '</div><!-- .menu-input-block -->'+
-              '<button id="submit" @click="registMenu()">登録</button>'+
+              '<button class="submit" @click="registMenu()">登録</button>'+
           '</div>'+
         '</div><!-- .contents -->',
     data: function () {
         return {
             menuName : this.$route.query.keyName,
             menuGenre : [],
-            genre : '肉',
+            genre : REGIST_MENU_GENRE.MEAT,
             menuDate : ''
         }
     },
@@ -285,7 +307,7 @@ Vue.component('regists', {
             } else {
                 // 更新
                 console.log('[START]update new menu.');
-                var isUpdate = confirm('献立名:' + this.menuName + 'が既に存在します。更新してもよろしいですか？');
+                var isUpdate = confirm('献立名:' + this.menuName + 'が既に存在します。更新してもよろしいですか？\n(※)最も新しい日付で表示されます。');
                 var dateList = menu['date']
                 for(i in dateList) {
                     if(dateList[i] == parseInt(this.menuDate)) {                      
