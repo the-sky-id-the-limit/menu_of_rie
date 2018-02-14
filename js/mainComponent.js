@@ -63,6 +63,8 @@ Vue.component('lists', {
             '</table>'+
             '<div>'+
               '<button class="submit tac" @click="deleteAll()" v-if="listDispFlag">全削除</button>'+
+              '<button class="submit tac" @click="buckupMenuList()" v-if="listDispFlag">バックアップ</button>'+
+              '<button class="submit tac" @click="insertBuckup()">データ復元</button>'+
             '</div>'+
           '</div>'+
         '</div><!-- .contents -->',
@@ -110,7 +112,30 @@ Vue.component('lists', {
                 deleteMenuList();
             }
             this.menuList = {};
+            this.listDispFlag = false;
             console.log('[END]deleteAll.');
+        },
+        buckupMenuList : function() {
+            console.log('[STRAT]buckupMenuList.');
+            var buckupList = getMenuList();
+            alert('以下の値をコピーして、メモ帳に保存してください。\n' + JSON.stringify(buckupList));
+            console.log('[END]buckupMenuList.');
+        },
+        insertBuckup : function(){
+            console.log('[STRAT]insertBuckup.');
+            var buckupData = prompt('献立のバックアップデータをコピペしてください。','');
+            if(buckupData == '' || buckupData == undefined || buckupData == null){
+                alert('データを入力してください。');
+                return;
+            } 
+            setMenuList(JSON.parse(buckupData));
+            this.menuList = getMenuList();
+            if(this.menuList == null || Object.keys(this.menuList).length == 0){
+                this.listDispFlag = false;
+            } else {
+                this.listDispFlag = true;
+            }
+            console.log('[END]insertBuckup.');
         },
         desc : function(flag){
             console.log('[START]desc sort.')
