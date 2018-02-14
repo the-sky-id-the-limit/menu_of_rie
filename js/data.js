@@ -9,7 +9,3 @@ REGIST_MENU_GENRE = {
 	FISH : "魚"
 }
 
-DATE = {
-	LATEST : "新しい順",
-	OLD : "古い順"
-}
