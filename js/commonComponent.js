@@ -8,13 +8,14 @@ Vue.component('headers', {
             '<ul>'+
                 '<router-link class="header-navi-li" tag="li" id="index" to="/">ホーム</router-link>'+
                 '<router-link class="header-navi-li" tag="li" id="list" to="/list">献立リスト</router-link>'+
-                '<router-link class="header-navi-li" tag="li" id="regist" :to="{ path: \'regist\', query: { keyName: keyName }}">献立登録</router-link>'+
+                '<router-link class="header-navi-li" tag="li" id="regist" :to="{ path: \'regist\', query: { keyName: keyName, genreName : genreName }}">献立登録</router-link>'+
             '</ul>'+
         '</div>'+
         '</div>',
     data: function () {
         return {
-            keyName : ''
+            keyName : '',
+            genreName : REGIST_MENU_GENRE.MEAT
         }
     }
 })
