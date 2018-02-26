@@ -62,7 +62,7 @@ Vue.component('lists', {
               '</tbody>'+
             '</table>'+
             '<div>'+
-              '<button class="submit tac" @click="deleteAll()" v-if="listDispFlag">全削除</button>'+
+              //'<button class="submit tac" @click="deleteAll()" v-if="listDispFlag">全削除</button>'+
               '<button class="submit tac" @click="buckupMenuList()" v-if="listDispFlag">バックアップ</button>'+
               '<button class="submit tac" @click="insertBuckup()">データ復元</button>'+
             '</div>'+
