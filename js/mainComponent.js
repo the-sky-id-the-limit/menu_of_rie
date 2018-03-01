@@ -292,6 +292,7 @@ Vue.component('regists', {
                       '<option v-for="genres in menuGenre">{{genres}}</option>'+
                   '</select>'+
                   '<button class="submit wide" @click="openAddGenre()">ジャンルを追加する</button>'+
+                  '<button class="submit" @click="openAddGenre()">ジャンルを追加する</button>'+
                   '<input type="text" v-model="newGenre" v-if="addGenreFlag">'+
               '</div><!-- .menu-input-block -->'+
               '<div class="menu-input-block">'+
