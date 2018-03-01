@@ -44,9 +44,9 @@ Vue.component('lists', {
               '<thead>'+
                 '<tr>'+
                   '<th></th>'+
-                  '<th>献立名<span @click="desc(nameFlag)">▲</span><span @click="asc(nameFlag)">▼</span></th>'+
-                  '<th>ジャンル<span @click="desc(genreFlag)">▲</span><span @click="asc(genreFlag)">▼</span></th>'+
-                  '<th>日付<span @click="desc(dateFlag)">▲</span><span @click="asc(dateFlag)">▼</span></th>'+
+                  '<th>献立名<br><span @click="desc(nameFlag)">▲</span><span @click="asc(nameFlag)">▼</span></th>'+
+                  '<th>ジャンル<br><span @click="desc(genreFlag)">▲</span><span @click="asc(genreFlag)">▼</span></th>'+
+                  '<th>日付<br><span @click="desc(dateFlag)">▲</span><span @click="asc(dateFlag)">▼</span></th>'+
                 '</tr>'+
               '</thead>'+
               '<tbody>'+
@@ -62,9 +62,9 @@ Vue.component('lists', {
               '</tbody>'+
             '</table>'+
             '<div>'+
-              '<button class="submit tac" @click="deleteAll()" v-if="listDispFlag">全削除</button>'+
-              '<button class="submit tac" @click="buckupMenuList()" v-if="listDispFlag">バックアップ</button>'+
-              '<button class="submit tac" @click="insertBuckup()">データ復元</button>'+
+              //'<button class="submit tac wide" @click="deleteAll()" v-if="listDispFlag">全削除</button>'+
+              '<button class="submit tac wide" @click="buckupMenuList()" v-if="listDispFlag">バックアップ</button><br>'+
+              '<button class="submit tac wide" @click="insertBuckup()">データ復元</button>'+
             '</div>'+
           '</div>'+
         '</div><!-- .contents -->',
@@ -291,7 +291,7 @@ Vue.component('regists', {
                   '<select v-model="genre">'+
                       '<option v-for="genres in menuGenre">{{genres}}</option>'+
                   '</select>'+
-                  '<button class="submit" @click="openAddGenre()">ジャンルを追加する</button>'+
+                  '<button class="submit wide" @click="openAddGenre()">ジャンルを追加する</button>'+
                   '<input type="text" v-model="newGenre" v-if="addGenreFlag">'+
               '</div><!-- .menu-input-block -->'+
               '<div class="menu-input-block">'+

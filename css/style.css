@@ -238,3 +238,75 @@ select {
     color: red;
     text-decoration: none;
 }
+
+
+/***** wide normal *****/
+.wide {
+  width : 150px;
+}
+
+/***************
+  large
+****************/
+
+@media (max-width: 1140px) {
+
+}
+
+/***************
+  medium-large
+****************/
+
+@media (max-width: 970px) {
+
+}
+
+/**************
+  medium
+***************/
+
+@media (max-width: 768px) {
+
+}
+
+/***************
+  medium-min
+****************/
+
+@media (max-width: 600px) {
+
+}
+
+
+/***************
+  min
+****************/
+
+@media (max-width: 480px) {
+  .header-navi ul li {
+    width: 100px;
+  }
+
+  .menu-list-table tbody td {
+    font-size: 12px;
+  }
+
+  .submit {
+    width: 50px;
+  }
+
+  .wide {
+    width : 125px;
+  }
+
+}
+
+/***************
+  minmum
+****************/
+
+@media (max-width: 420px) {
+
+
+}
+
