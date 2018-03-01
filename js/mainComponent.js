@@ -62,7 +62,7 @@ Vue.component('lists', {
               '</tbody>'+
             '</table>'+
             '<div>'+
-              //'<button class="submit tac" @click="deleteAll()" v-if="listDispFlag">全削除</button>'+
+              '<button class="submit tac" @click="deleteAll()" v-if="listDispFlag">全削除</button>'+
               '<button class="submit tac" @click="buckupMenuList()" v-if="listDispFlag">バックアップ</button>'+
               '<button class="submit tac" @click="insertBuckup()">データ復元</button>'+
             '</div>'+
@@ -204,10 +204,18 @@ Vue.component('lists', {
             console.log('[END]desc sort.')
         }
     },
-    mounted: function(){
-        for(genre in MENU_GENRE) {
-            this.menuGenre.push(MENU_GENRE[genre]);
+    created: function(){
+        var genres = getGenre();
+        if(genres == null || Object.keys(genres).length == 0){
+            genres = [];
+            for(genre in MENU_GENRE) {
+                genres.push(MENU_GENRE[genre]);
+            }  
+            setGenre(genres);
         }
+        this.menuGenre = genres;
+    },
+    mounted: function(){
         this.menuList = getMenuList();
         if(this.menuList == null || Object.keys(this.menuList).length == 0){
             this.listDispFlag = false;
@@ -283,6 +291,8 @@ Vue.component('regists', {
                   '<select v-model="genre">'+
                       '<option v-for="genres in menuGenre">{{genres}}</option>'+
                   '</select>'+
+                  '<button class="submit" @click="openAddGenre()">ジャンルを追加する</button>'+
+                  '<input type="text" v-model="newGenre" v-if="addGenreFlag">'+
               '</div><!-- .menu-input-block -->'+
               '<div class="menu-input-block">'+
                   '<p class="labels">献立を使った直近の日付</p>'+
@@ -295,8 +305,10 @@ Vue.component('regists', {
         return {
             menuName : this.$route.query.keyName,
             menuGenre : [],
-            genre : this.$route.query.genreName,
-            menuDate : ''
+            genre : REGIST_MENU_GENRE.MEAT,
+            menuDate : '',
+            addGenreFlag : false,
+            newGenre : ''
         }
     },
     methods: {
@@ -304,11 +316,21 @@ Vue.component('regists', {
             if(this.menuName == '' || this.menuName == undefined || this.menuName == null) {
                 alert('献立名を入力して下さい。');
                 return;
-            }            
-            if(this.genre == '' || this.genre == undefined || this.genre == null) {
-                alert('ジャンル名を正しく選択して下さい。');
-                return;
-            }            
+            }     
+            if(this.newGenre == '' || this.newGenre == undefined || this.newGenre == null){
+                if(this.genre == '' || this.genre == undefined || this.genre == null) {
+                    alert('ジャンル名を正しく選択・入力して下さい。');
+                    return;
+                }
+            } else {
+                this.genre = this.newGenre;
+                var registGenre = getGenre();
+                console.log(registGenre.indexOf(this.genre));
+                if(registGenre.indexOf(this.genre) == -1) {
+                    registGenre.push(this.genre);
+                    setGenre(registGenre);
+                }
+            }  
             if(this.menuDate == '' || this.menuDate == undefined || this.menuDate == null) {
                 alert('日付を入力して下さい。');
                 return;
@@ -355,12 +377,30 @@ Vue.component('regists', {
                 alert('献立の更新を行いました。');
                 console.log('[END]update new menu.');
             }
+            this.addGenreFlag = false;
             this.$router.push({ path: 'list' })
+        },
+        openAddGenre : function(){
+            this.addGenreFlag = true;
         }
     },
     mounted: function(){
-        for(genre in REGIST_MENU_GENRE) {
-            this.menuGenre.push(MENU_GENRE[genre]);
+        var genres = getGenre();
+        if(genres == null || Object.keys(genres).length == 0){
+            genres = [];
+            for(genre in MENU_GENRE) {
+                if(MENU_GENRE[genre] != '全て'){
+                    genres.push(MENU_GENRE[genre]);
+                }
+            }  
+            setGenre(genres);
+            this.menuGenre = genres;
+        } else {
+            for(genre in genres) {
+                if(genres[genre] != '全て'){
+                    this.menuGenre.push(genres[genre]);
+                }
+            }
         }
 
         var now = new Date();

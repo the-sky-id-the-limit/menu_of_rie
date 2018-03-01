@@ -89,5 +89,40 @@ var deleteMenuList = function(){
 	deleteLocalStorage('menuList');
 }
 
+/**
+ * genreリストを取得します。
+ */
+var getGenre = function(){
+	return getLocalStorage('genre');
+}
 
+/**
+ * genreリストを保存します。
+ */ 
+var setGenre = function(data){
+	setLocalStorage('genre', data);
+}
+
+/**
+ * 該当のgenreを削除します。
+ */
+var deleteGenre = function(key){
+	// menuリストを取得
+	var genres = getGenre();
+	var updateGenre = {};
+	// indexの位置に該当するデータを削除
+	for(genre in genres) {
+		if(key != genre) {
+			updateGenre[genre] = genres[genre];
+		}
+	}
+	setgenre(updateGenre);
+}
+
+/**
+ * genreリストを全て削除します。
+ */
+var deleteGenre = function(){
+	deleteLocalStorage('genre');
+}
 
