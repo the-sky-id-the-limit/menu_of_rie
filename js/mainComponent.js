@@ -47,21 +47,18 @@ Vue.component('lists', {
                   '<th>献立名<br><span @click="desc(nameFlag)">▲</span><span @click="asc(nameFlag)">▼</span></th>'+
                   '<th>ジャンル<br><span @click="desc(genreFlag)">▲</span><span @click="asc(genreFlag)">▼</span></th>'+
                   '<th>日付<br><span @click="desc(dateFlag)">▲</span><span @click="asc(dateFlag)">▼</span></th>'+
-                  '<th>登録</th>'+
                 '</tr>'+
               '</thead>'+
               '<tbody>'+
                 '<tr v-for="menu in menuList">'+
                   '<td>'+
-                    '<button @click="deletMenu(menu.name)" class="submit">削除</button>'+
+                    //'<button @click="deletMenu(menu.name)" class="submit">削除</button>'+
+                    '<button @click="todayMenu(menu.name)" class="submit">設定</button>'+
                     '<button @click="updateMenu(menu.name, menu.genre)" class="submit">編集</button>'+
                   '</td>'+
                   '<td><a @click="getDateList(menu.name)" class="menu-name">{{menu.name}}</a></td>'+
                   '<td>{{menu.genre}}</td>'+
                   '<td>{{menu.latestDate}}</td>'+
-                  '<td>'+
-                    '<button @click="todayMenu(menu.name)" class="submit">今日の献立</button>'+
-                  '</td>'+
                 '</tr>'+
               '</tbody>'+
             '</table>'+
@@ -333,16 +330,18 @@ Vue.component('regists', {
                   '<input type="text" v-model="menuDate">'+
               '</div><!-- .menu-input-block -->'+
               '<button class="submit" @click="registMenu()">登録</button>'+
+              '<button class="submit" v-if="isAlready" @click="deletMenu()">削除</button>'+
           '</div>'+
         '</div><!-- .contents -->',
     data: function () {
         return {
             menuName : this.$route.query.keyName,
             menuGenre : [],
-            genre : REGIST_MENU_GENRE.MEAT,
+            genre : this.$route.query.genreName,
             menuDate : '',
             addGenreFlag : false,
-            newGenre : ''
+            newGenre : '',
+            isAlready : false
         }
     },
     methods: {
@@ -416,7 +415,17 @@ Vue.component('regists', {
         },
         openAddGenre : function(){
             this.addGenreFlag = true;
-        }
+        },
+        deletMenu : function() {
+            console.log('[STRAT]deleteMenu with ' + this.menuName);
+            var isDelete = confirm('献立を削除します。よろしいですか？');
+            if(isDelete) {
+                deleteMenu(this.menuName);
+            }
+            this.menuList = getMenuList();
+            console.log('[END]deleteMenu with ' + key);
+            this.$router.push({ path: 'list' })
+        },
     },
     mounted: function(){
         var genres = getGenre();
@@ -441,6 +450,13 @@ Vue.component('regists', {
         this.menuDate = now.getFullYear()+
           ( "0"+( now.getMonth()+1 ) ).slice(-2)+
           ( "0"+now.getDate() ).slice(-2);
+
+    
+        if(this.$route.query.genreName == ''){
+            this.genre = REGIST_MENU_GENRE.MEAT;
+        } else {
+            this.isAlready = true;
+        }
     },
     watch : {
         /**

@@ -15,7 +15,7 @@ Vue.component('headers', {
     data: function () {
         return {
             keyName : '',
-            genreName : REGIST_MENU_GENRE.MEAT
+            genreName : ''
         }
     }
 })
