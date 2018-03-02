@@ -38,7 +38,7 @@ Vue.component('lists', {
             '<h5>メニューリスト</h5>'+
             '<div v-if="!listDispFlag" class="tac">'+
               '<h3>該当する献立がありません。</h3>'+
-              '<router-link tag="button" to="/regist" class="submit">献立を登録する</router-link>'+
+              '<router-link tag="button" to="/regist" class="submit wide">献立を登録する</router-link>'+
             '</div>'+
             '<table class="menu-list-table" v-if="listDispFlag">'+
               '<thead>'+
@@ -47,6 +47,7 @@ Vue.component('lists', {
                   '<th>献立名<br><span @click="desc(nameFlag)">▲</span><span @click="asc(nameFlag)">▼</span></th>'+
                   '<th>ジャンル<br><span @click="desc(genreFlag)">▲</span><span @click="asc(genreFlag)">▼</span></th>'+
                   '<th>日付<br><span @click="desc(dateFlag)">▲</span><span @click="asc(dateFlag)">▼</span></th>'+
+                  '<th>登録</th>'+
                 '</tr>'+
               '</thead>'+
               '<tbody>'+
@@ -58,6 +59,9 @@ Vue.component('lists', {
                   '<td><a @click="getDateList(menu.name)" class="menu-name">{{menu.name}}</a></td>'+
                   '<td>{{menu.genre}}</td>'+
                   '<td>{{menu.latestDate}}</td>'+
+                  '<td>'+
+                    '<button @click="todayMenu(menu.name)" class="submit">今日の献立</button>'+
+                  '</td>'+
                 '</tr>'+
               '</tbody>'+
             '</table>'+
@@ -136,6 +140,36 @@ Vue.component('lists', {
                 this.listDispFlag = true;
             }
             console.log('[END]insertBuckup.');
+        },
+        todayMenu: function(key) {
+            console.log('[STRAT]todayMenu.');
+            var now = new Date();
+            var nowDate = now.getFullYear()+
+              ( "0"+( now.getMonth()+1 ) ).slice(-2)+
+              ( "0"+now.getDate() ).slice(-2);
+            isSetTodayMenu = confirm(key + 'を今日(' + nowDate +')の献立に設定します。よろしいですか？');
+            if(!isSetTodayMenu){
+                console.log('[END]canceld todayMenu.');
+                return;
+            } else {    
+                var intDate = parseInt(nowDate);
+                var dateList = this.menuList[key].date;
+                if(dateList.indexOf(intDate) != -1){
+                    alert("既に本日の献立に設定されています。");
+                    return;
+                }
+                dateList.push(intDate);
+                this.menuList[key].date = dateList;
+                this.menuList[key].latestDate = intDate;
+                setMenuList(this.menuList)
+                this.menuList = getMenuList();
+                if(this.menuList == null || Object.keys(this.menuList).length == 0){
+                    this.listDispFlag = false;
+                } else {
+                    this.listDispFlag = true;
+                }
+            }
+            console.log('[END]todayMenu.');
         },
         desc : function(flag){
             console.log('[START]desc sort.')
