@@ -156,6 +156,12 @@ Vue.component('lists', {
                     return;
                 }
                 dateList.push(intDate);
+                // ソート
+                dateList.sort(function(a,b){
+                    if(a > b) return -1;
+                    if(a < b) return 1;
+                    return 0;
+                });
                 this.menuList[key].date = dateList;
                 this.menuList[key].latestDate = intDate;
                 setMenuList(this.menuList)
