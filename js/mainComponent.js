@@ -423,7 +423,7 @@ Vue.component('regists', {
                 deleteMenu(this.menuName);
             }
             this.menuList = getMenuList();
-            console.log('[END]deleteMenu with ' + key);
+            console.log('[END]deleteMenu with ' + this.menuName);
             this.$router.push({ path: 'list' })
         },
     },
